@@ -16,3 +16,12 @@ yarn-error.log*
 # OS files
 .DS_Store
 Thumbs.db
+
+# Python caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Uploaded images
+uploads/

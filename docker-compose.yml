@@ -1,0 +1,78 @@
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: krishiguard-redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - krishi_net
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: krishiguard-api
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - FRONTEND_ORIGIN=http://localhost:5173
+    volumes:
+      - uploads_data:/app/uploads
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - krishi_net
+
+  worker:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: krishiguard-worker
+    restart: unless-stopped
+    command: ["python", "-m", "backend.worker"]
+    env_file:
+      - .env
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+    volumes:
+      - uploads_data:/app/uploads
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - krishi_net
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    container_name: krishiguard-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    depends_on:
+      - api
+    networks:
+      - krishi_net
+
+networks:
+  krishi_net:
+    driver: bridge
+
+volumes:
+  redis_data:
+  uploads_data:

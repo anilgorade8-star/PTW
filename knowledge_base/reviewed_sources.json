@@ -1,0 +1,192 @@
+[
+  {
+    "diseaseKey": "early_blight",
+    "cropTypes": ["tomato"],
+    "commonName": "Early Blight",
+    "pathogen": "Alternaria solani (fungal)",
+    "title": "Integrated Management of Tomato Early Blight",
+    "institution": "Indian Council of Agricultural Research (ICAR) - Indian Institute of Horticultural Research (IIHR)",
+    "url": "https://www.iihr.res.in/technologies/integrated-disease-management-tomato",
+    "region": "South Asia / Tropical & Sub-tropical",
+    "reviewStatus": "reviewed",
+    "reviewerId": "ICAR-EXT-2024-AGRI",
+    "limitations": "Symptoms often mimic Septoria leaf spot and nutritional deficiency in early stages. Microscopic spore check or symptom progression review advised before intensive intervention.",
+    "diagnosticCharacteristics": [
+      "Concentric dark rings forming 'target board' or bullseye pattern on older leaves first",
+      "Yellow chlorotic halo surrounding brown or dark brown necrotic spots",
+      "Lower canopy foliage infected first, progressing upward as canopy remains dense",
+      "Sunken dark lesions on stem or collar in severe cases"
+    ],
+    "favorableWeather": {
+      "temperatureRangeC": [24, 30],
+      "relativeHumidityMinPct": 80,
+      "rainfallFactor": "Frequent light showers or heavy morning dew with warm days"
+    },
+    "safeManagementSteps": [
+      "Prune affected lower leaves (bottom 12-18 inches) using sanitized shears to increase airflow.",
+      "Avoid overhead sprinkler irrigation; switch to drip or base watering to keep leaves dry.",
+      "Apply organic mulch (straw or dried grass) around the base to prevent soil-splash of fungal spores.",
+      "Rotate crops with non-solanaceous crops (e.g., maize, pulses) for at least 2 seasons.",
+      "Consult local agricultural extension officer (KVK) for bio-fungicide (Trichoderma viride 1%) formulation."
+    ],
+    "chemicalWarning": "Do not apply chemical fungicide cocktails without confirmed diagnosis. Strictly adhere to pre-harvest intervals (PHI) to prevent food residues."
+  },
+  {
+    "diseaseKey": "late_blight",
+    "cropTypes": ["tomato"],
+    "commonName": "Late Blight",
+    "pathogen": "Phytophthora infestans (oomycete)",
+    "title": "Field Diagnosis and Emergency Protocols for Late Blight in Tomato",
+    "institution": "Tamil Nadu Agricultural University (TNAU) Agritech Portal & ICAR-CPRI",
+    "url": "https://agritech.tnau.ac.in/horticulture/horti_vegetables_tomato_diseases.html",
+    "region": "Highlands, temperate, and humid subtropical winter regions",
+    "reviewStatus": "reviewed",
+    "reviewerId": "TNAU-AGRI-DEPT-PATH",
+    "limitations": "Rapidly destructive under cool, fog/rainy conditions. Can destroy an entire field within 7-10 days if misdiagnosed as water logging or early blight.",
+    "diagnosticCharacteristics": [
+      "Water-soaked pale to dark green irregular lesions turning brown-black rapidly",
+      "White or grayish downy fungal-like growth visible on the underside of leaves during high humidity/early morning",
+      "Stems show greasy, dark brown to purplish lesions that easily snap",
+      "Firm brown blotches on green or ripening fruit"
+    ],
+    "favorableWeather": {
+      "temperatureRangeC": [12, 22],
+      "relativeHumidityMinPct": 90,
+      "rainfallFactor": "Prolonged fog, continuous drizzle, or cool overcast weather"
+    },
+    "safeManagementSteps": [
+      "Immediately rogue (remove and safely burn/deep-bury) severely infected plants to halt spore spread.",
+      "Strictly stop overhead watering immediately; maximize inter-row air circulation.",
+      "Inspect nearby potato or tomato fields for initial foci of infection.",
+      "Apply copper oxychloride (COC) or Bordeaux mixture (1%) preventive barrier spray as recommended by nearest Krishi Vigyan Kendra (KVK).",
+      "Do not compost infected plant residues."
+    ],
+    "chemicalWarning": "High-risk pathogen with rapid resistance buildup. Use only university-approved protective fungicides and wear personal protective equipment (PPE)."
+  },
+  {
+    "diseaseKey": "leaf_mold",
+    "cropTypes": ["tomato"],
+    "commonName": "Leaf Mold",
+    "pathogen": "Passalora fulva (syn. Cladosporium fulvum)",
+    "title": "Protected Cultivation and Polyhouse Tomato Leaf Mold Advisory",
+    "institution": "Punjab Agricultural University (PAU) / ICAR-IARI Extension",
+    "url": "https://www.pau.edu/index.php?q=extension-bulletins-vegetables",
+    "region": "Polyhouse, greenhouse, and high-density humid outdoor regions",
+    "reviewStatus": "reviewed",
+    "reviewerId": "PAU-HORT-EXT-44",
+    "limitations": "Principally attacks leaves; fruit infection is rare. Often confused with powdery mildew or nutrient deficiency.",
+    "diagnosticCharacteristics": [
+      "Pale green or yellowish indistinct chlorotic patches on upper leaf surface",
+      "Olive-green to velvety brown velvety mold patches on corresponding lower leaf surface",
+      "Oldest leaves curl, wither, and drop prematurely without target-board rings",
+      "Thrives under high relative humidity inside tunnels or dense shade"
+    ],
+    "favorableWeather": {
+      "temperatureRangeC": [21, 26],
+      "relativeHumidityMinPct": 85,
+      "rainfallFactor": "Condensation on leaf undersides, stagnant humid air"
+    },
+    "safeManagementSteps": [
+      "Increase polyhouse/tunnel ventilation, open side curtains to drop humidity below 80%.",
+      "Widen spacing between rows to avoid overlapping foliage.",
+      "De-leaf lower senescent foliage carefully to improve light penetration.",
+      "Base watering only; avoid wetting the canopy."
+    ],
+    "chemicalWarning": "Avoid excessive preventative spraying; microclimate control (ventilation) is the most effective and eco-friendly management method."
+  },
+  {
+    "diseaseKey": "bacterial_spot",
+    "cropTypes": ["tomato"],
+    "commonName": "Bacterial Spot",
+    "pathogen": "Xanthomonas perforans / euvesicatoria",
+    "title": "Bacterial Spot of Solanaceous Vegetables: Field Identification and Sanitation",
+    "institution": "ICAR - Indian Agricultural Research Institute (IARI), New Delhi",
+    "url": "https://www.iari.res.in/index.php/en/divisions/plant-pathology",
+    "region": "Warm, wet, windy tropical and subtropical farming belts",
+    "reviewStatus": "reviewed",
+    "reviewerId": "IARI-PATH-DIV-89",
+    "limitations": "Antibiotics are strictly restricted in commercial agriculture due to AMR risks. Differentiation from bacterial speck requires lesion size observation.",
+    "diagnosticCharacteristics": [
+      "Small (2-3 mm) dark brown to black circular lesions on leaves, often water-soaked initially",
+      "Centers of lesions frequently tear or drop out, giving a shot-hole or ragged appearance",
+      "Fruit shows raised brown scabby warts with white halos on immature fruit",
+      "No concentric bullseye rings and no downy mold underside"
+    ],
+    "favorableWeather": {
+      "temperatureRangeC": [25, 32],
+      "relativeHumidityMinPct": 85,
+      "rainfallFactor": "Heavy wind-driven rain, sprinkler splash that spreads bacterial cells"
+    },
+    "safeManagementSteps": [
+      "Do not enter or cultivate fields while foliage is wet to avoid mechanically transmitting bacteria.",
+      "Disinfect all pruning tools in 10% bleach or 70% ethanol between plants.",
+      "Use certified disease-free treated seed and healthy nursery transplants.",
+      "Copper-based bactericide sprays mixed with mancozeb as per state package of practices.",
+      "Incorporate deep ploughing of crop residues immediately post-harvest."
+    ],
+    "chemicalWarning": "Do not use unapproved human antibiotics (streptomycin misuse is restricted). Follow national guidelines on bactericide safety."
+  },
+  {
+    "diseaseKey": "yellow_leaf_curl",
+    "cropTypes": ["tomato"],
+    "commonName": "Tomato Yellow Leaf Curl Virus (TYLCV)",
+    "pathogen": "Tomato yellow leaf curl virus (Begomovirus transmitted by Whitefly Bemisia tabaci)",
+    "title": "Vector Management and Integrated Protocol for TYLCV in Tomato",
+    "institution": "University of Agricultural Sciences (UAS), Bangalore & ICAR-IIHR",
+    "url": "https://uasbangalore.edu.in/crop-protection-advisories",
+    "region": "All tomato growing tracts with whitefly populations",
+    "reviewStatus": "reviewed",
+    "reviewerId": "UASB-ENTO-PATH-12",
+    "limitations": "Viral infection cannot be cured once symptoms manifest inside the plant. Fungicides have ZERO effect.",
+    "diagnosticCharacteristics": [
+      "Marked stunting and erect bushy appearance of plants",
+      "Upward curling and cupping of leaflet margins with pronounced yellowing (chlorosis)",
+      "Reduction in leaf blade size, giving a puckered, deformed appearance",
+      "Severe flower abscission and drastic fruit set reduction"
+    ],
+    "favorableWeather": {
+      "temperatureRangeC": [28, 38],
+      "relativeHumidityMinPct": 40,
+      "rainfallFactor": "Dry, warm periods that favor whitefly vector reproduction and migration"
+    },
+    "safeManagementSteps": [
+      "Install yellow sticky traps (15-20 traps/acre) across the field to monitor and mass-trap whiteflies.",
+      "Erect 40-mesh insect-proof nylon nets over seedling nurseries.",
+      "Rogue out and destroy infected viral plants early to reduce inoculum reservoir.",
+      "Spray 5% Neem Seed Kernel Extract (NSKE) or Neem oil (3 ml/L) for safe botanical whitefly suppression.",
+      "Grow border crops like maize, sorghum, or pearl millet (3 rows) as barrier against whitefly drift."
+    ],
+    "chemicalWarning": "Never spray fungicides against viral diseases. Misuse of broad-spectrum synthetic pyrethroids causes whitefly resurgence by killing natural predators."
+  },
+  {
+    "diseaseKey": "healthy",
+    "cropTypes": ["tomato"],
+    "commonName": "Healthy Tomato Foliage",
+    "pathogen": "None (Healthy plant)",
+    "title": "Good Agricultural Practices (GAP) for Sustainable Tomato Production",
+    "institution": "ICAR - National Academy of Agricultural Research Management (NAARM)",
+    "url": "https://naarm.org.in/gap-manual-vegetables",
+    "region": "General",
+    "reviewStatus": "reviewed",
+    "reviewerId": "NAARM-GAP-2024",
+    "limitations": "Minor mechanical damage, normal physiological leaf curl from wind, or aging cotyledons should not be mistaken for pathology.",
+    "diagnosticCharacteristics": [
+      "Uniform vibrant green foliage without chlorotic spots, dark halos, or necrotic margins",
+      "Vigorous stem and leaf turgidity without wilting",
+      "Even leaf texture without downy growth, powdery deposits, or insect galling",
+      "Healthy branching and normal flowering/fruit set"
+    ],
+    "favorableWeather": {
+      "temperatureRangeC": [20, 28],
+      "relativeHumidityMinPct": 50,
+      "rainfallFactor": "Evenly distributed soil moisture with well-drained soil"
+    },
+    "safeManagementSteps": [
+      "Maintain consistent soil moisture through scheduled drip irrigation.",
+      "Apply balanced organic compost and micronutrients (foliar zinc and boron if indicated).",
+      "Regularly scout the field twice weekly for early signs of pests or stressors.",
+      "Ensure proper plant staking or trellising to keep foliage off the ground."
+    ],
+    "chemicalWarning": "No pesticide spray required. Indiscriminate chemical applications harm beneficial pollinators and soil microbiome."
+  }
+]
