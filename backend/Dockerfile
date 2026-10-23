@@ -2,7 +2,8 @@ FROM python:3.11-slim
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
-    PIP_NO_CACHE_DIR=1
+    PIP_NO_CACHE_DIR=1 \
+    PYTHONPATH=/app
 
 WORKDIR /app
 
@@ -14,16 +15,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Install python dependencies
-COPY backend/requirements.txt /app/requirements.txt
+COPY requirements.txt /app/requirements.txt
 RUN pip install --upgrade pip && \
-    pip install -r /app/requirements.txt && \
-    pip install email-validator
+    pip install -r /app/requirements.txt
 
-# Copy code
-COPY backend /app/backend
-COPY knowledge_base /app/knowledge_base
+# Copy all backend files into /app/backend
+COPY . /app/backend
 
-# Create non-root user
+# Create non-root user and media directories
 RUN useradd -m -u 1001 krishiapp && \
     mkdir -p /app/uploads/crop_images && \
     chown -R krishiapp:krishiapp /app

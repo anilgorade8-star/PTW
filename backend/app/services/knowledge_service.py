@@ -18,10 +18,16 @@ class KnowledgeService:
                 logger.warning(f"Error querying knowledge sources from MongoDB: {e}")
 
         # Fallback to local reviewed_sources.json
-        kb_path = Path(__file__).resolve().parent.parent.parent.parent / "knowledge_base" / "reviewed_sources.json"
-        if kb_path.exists():
-            with open(kb_path, "r", encoding="utf-8") as f:
-                return json.load(f)
+        candidate_paths = [
+            Path(__file__).resolve().parent.parent.parent / "knowledge_base" / "reviewed_sources.json",
+            Path(__file__).resolve().parent.parent.parent.parent / "knowledge_base" / "reviewed_sources.json",
+            Path("/app/backend/knowledge_base/reviewed_sources.json"),
+            Path("/app/knowledge_base/reviewed_sources.json"),
+        ]
+        for kb_path in candidate_paths:
+            if kb_path.exists():
+                with open(kb_path, "r", encoding="utf-8") as f:
+                    return json.load(f)
         return []
 
     @classmethod
