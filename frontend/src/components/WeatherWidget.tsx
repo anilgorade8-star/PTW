@@ -70,6 +70,36 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({ weather, farmName,
         </div>
       </div>
 
+      {/* Agricultural Soil Moisture & Rain Probability */}
+      {(weather.soil_moisture_root_zone_m3 !== undefined || weather.precipitation_probability_pct !== undefined) && (
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 mb-4 text-xs">
+          {weather.soil_moisture_root_zone_m3 !== undefined && weather.soil_moisture_root_zone_m3 !== null && (
+            <div className="bg-slate-900/40 rounded-xl px-3 py-2 border border-slate-800">
+              <span className="text-[10px] text-slate-400 block">Root Zone Soil Moisture (3-9cm)</span>
+              <span className="text-sm font-bold text-emerald-300">
+                {(weather.soil_moisture_root_zone_m3 * 100).toFixed(1)}% m³/m³
+              </span>
+            </div>
+          )}
+          {weather.soil_moisture_surface_m3 !== undefined && weather.soil_moisture_surface_m3 !== null && (
+            <div className="bg-slate-900/40 rounded-xl px-3 py-2 border border-slate-800">
+              <span className="text-[10px] text-slate-400 block">Surface Soil Moisture (0-1cm)</span>
+              <span className="text-sm font-bold text-cyan-300">
+                {(weather.soil_moisture_surface_m3 * 100).toFixed(1)}% m³/m³
+              </span>
+            </div>
+          )}
+          {weather.precipitation_probability_pct !== undefined && weather.precipitation_probability_pct !== null && (
+            <div className="bg-slate-900/40 rounded-xl px-3 py-2 border border-slate-800">
+              <span className="text-[10px] text-slate-400 block">Precipitation Probability</span>
+              <span className="text-sm font-bold text-amber-300">
+                {weather.precipitation_probability_pct.toFixed(0)}%
+              </span>
+            </div>
+          )}
+        </div>
+      )}
+
       {/* Epidemiological Pathogen Risk Inferences */}
       <div className="pt-3 border-t border-slate-800/80 flex flex-wrap gap-2 text-xs">
         {weather.is_risk_favorable_for_fungal && (

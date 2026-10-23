@@ -33,6 +33,10 @@ export interface NormalizedWeatherData {
   wind_speed_kmh: number;
   weather_code: number;
   weather_description: string;
+  soil_moisture_surface_m3?: number | null;
+  soil_moisture_root_zone_m3?: number | null;
+  precipitation_probability_pct?: number | null;
+  rain_mm?: number | null;
   is_risk_favorable_for_fungal: boolean;
   is_risk_favorable_for_bacterial: boolean;
   is_risk_favorable_for_vector: boolean;

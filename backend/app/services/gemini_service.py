@@ -86,7 +86,7 @@ class GeminiService:
             }
 
             async with httpx.AsyncClient(timeout=25.0) as client:
-                res = await client.post(url, json=payload)
+                res = await client.post(url, json=payload, headers={"x-goog-api-key": api_key})
                 res.raise_for_status()
                 data = res.json()
                 raw_text = data["candidates"][0]["content"]["parts"][0]["text"]
