@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Sprout, Lock, Mail, User as UserIcon, AlertCircle, ArrowRight, ShieldCheck } from 'lucide-react';
+import { Sprout, Lock, Mail, User as UserIcon, AlertCircle, ArrowRight, ShieldCheck, Zap } from 'lucide-react';
 
 export const RegisterPage: React.FC = () => {
-  const { register } = useAuth();
+  const { register, loginDemo } = useAuth();
   const navigate = useNavigate();
 
   const [name, setName] = useState('');
@@ -13,6 +13,7 @@ export const RegisterPage: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [demoLoading, setDemoLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,6 +38,19 @@ export const RegisterPage: React.FC = () => {
       setError(err?.message || 'Registration failed. Email may already be in use.');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleDemoLogin = async () => {
+    setError(null);
+    setDemoLoading(true);
+    try {
+      await loginDemo();
+      navigate('/dashboard');
+    } catch (err: any) {
+      setError(err?.message || 'Demo login failed. Please try again.');
+    } finally {
+      setDemoLoading(false);
     }
   };
 
@@ -145,7 +159,7 @@ export const RegisterPage: React.FC = () => {
 
             <button
               type="submit"
-              disabled={loading}
+              disabled={loading || demoLoading}
               className="w-full py-3 rounded-xl font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-lg shadow-emerald-500/20 transition-all hover:scale-101 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed mt-2"
             >
               {loading ? (
@@ -158,6 +172,35 @@ export const RegisterPage: React.FC = () => {
               )}
             </button>
           </form>
+
+          {/* Demo Login Option */}
+          <div className="relative my-6 text-center">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-slate-800" />
+            </div>
+            <span className="relative px-3 bg-slate-900 text-xs font-semibold uppercase tracking-wider text-slate-400">
+              Or Try Without Registering
+            </span>
+          </div>
+
+          <button
+            type="button"
+            onClick={handleDemoLogin}
+            disabled={loading || demoLoading}
+            className="w-full py-3 rounded-xl font-bold bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 shadow-lg shadow-amber-500/20 transition-all hover:scale-101 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {demoLoading ? (
+              <div className="w-5 h-5 border-2 border-slate-950 border-t-transparent rounded-full animate-spin" />
+            ) : (
+              <>
+                <Zap className="w-4 h-4 fill-current stroke-[2.5]" />
+                ⚡ Explore with Demo Farmer (1-Click)
+              </>
+            )}
+          </button>
+          <p className="text-[11px] text-center text-slate-500 mt-2">
+            No signup needed — test all features immediately
+          </p>
 
           <div className="mt-6 pt-6 border-t border-slate-800 text-center text-xs text-slate-400">
             Already registered?{' '}

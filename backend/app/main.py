@@ -17,6 +17,7 @@ from backend.app.core.errors import (
 from backend.app.database import DatabaseManager
 from backend.app.redis_client import RedisManager
 from backend.app.middleware.request_id import RequestIdMiddleware
+from backend.app.middleware.security_headers import SecurityHeadersMiddleware
 from backend.app.api.routes import auth, farms, assessments, health
 
 @asynccontextmanager
@@ -39,17 +40,19 @@ def create_application() -> FastAPI:
         lifespan=lifespan
     )
 
-    # 1. Request ID Middleware
+    # 1. Security & Traceability Middleware
+    app.add_middleware(SecurityHeadersMiddleware)
     app.add_middleware(RequestIdMiddleware)
 
     # 2. CORS Middleware
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=settings.ALLOWED_ORIGINS,
+        allow_origins=settings.ALLOWED_ORIGINS + ["https://ptw-1.onrender.com"],
+        allow_origin_regex=r"https://.*\.onrender\.com|http://localhost:\d+|http://127\.0\.0\.1:\d+",
         allow_credentials=True,
         allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
         allow_headers=["*"],
-        expose_headers=["X-Request-ID", "Retry-After"]
+        expose_headers=["X-Request-ID", "Retry-After", "X-CSRF-Token"]
     )
 
     # 3. Include Routers

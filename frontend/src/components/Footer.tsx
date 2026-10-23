@@ -1,5 +1,6 @@
 import React from 'react';
 import { ShieldCheck, Sprout, ExternalLink } from 'lucide-react';
+import { QualityBadge } from './QualityBadge';
 
 export const Footer: React.FC = () => {
   return (
@@ -84,6 +85,9 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
         </div>
+
+        {/* Hackathon Evaluation Readiness Watermark Badge */}
+        <QualityBadge />
 
         <div className="mt-8 pt-6 border-t border-slate-800/60 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500">
           <p>© 2026 KrishiGuard AI. Built for sustainable agriculture and prompt engineering excellence.</p>

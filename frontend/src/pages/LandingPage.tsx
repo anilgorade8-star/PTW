@@ -1,5 +1,6 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import { 
   Sprout, 
   ShieldCheck, 
@@ -12,10 +13,27 @@ import {
   Lock, 
   AlertOctagon,
   Eye,
-  FileCheck
+  FileCheck,
+  Zap
 } from 'lucide-react';
 
 export const LandingPage: React.FC = () => {
+  const { loginDemo } = useAuth();
+  const navigate = useNavigate();
+  const [demoLoading, setDemoLoading] = useState(false);
+
+  const handleDemoClick = async () => {
+    setDemoLoading(true);
+    try {
+      await loginDemo();
+      navigate('/dashboard');
+    } catch {
+      navigate('/login');
+    } finally {
+      setDemoLoading(false);
+    }
+  };
+
   const steps = [
     { icon: Eye, title: "1. Visual Observation", desc: "Farmer captures crop photograph. Gemini AI inspects leaf symptoms without hallucinating unverified dosages." },
     { icon: CloudRain, title: "2. Farm Microclimate", desc: "Live weather from Open-Meteo cached in Redis checks if temperature and humidity favor pathogen sporulation." },
@@ -43,6 +61,20 @@ export const LandingPage: React.FC = () => {
           </p>
 
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <button
+              onClick={handleDemoClick}
+              disabled={demoLoading}
+              className="w-full sm:w-auto px-8 py-3.5 rounded-xl font-bold bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 shadow-xl shadow-amber-500/25 transition-all hover:scale-105 flex items-center justify-center gap-2"
+            >
+              {demoLoading ? (
+                <div className="w-5 h-5 border-2 border-slate-950 border-t-transparent rounded-full animate-spin" />
+              ) : (
+                <>
+                  <Zap className="w-5 h-5 fill-current stroke-[2.5]" />
+                  ⚡ Try Live Demo (1-Click)
+                </>
+              )}
+            </button>
             <Link
               to="/register"
               className="w-full sm:w-auto px-8 py-3.5 rounded-xl font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-xl shadow-emerald-500/25 transition-all hover:scale-105 flex items-center justify-center gap-2"
@@ -54,7 +86,7 @@ export const LandingPage: React.FC = () => {
               to="/login"
               className="w-full sm:w-auto px-8 py-3.5 rounded-xl font-semibold bg-slate-800/80 hover:bg-slate-700/80 text-white border border-slate-700/80 transition-all flex items-center justify-center gap-2"
             >
-              Sign In to Your Farms
+              Sign In
             </Link>
           </div>
 

@@ -26,23 +26,27 @@ from backend.app.api.dependencies.rate_limit import rate_limit
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 
 def _set_session_cookie(response: Response, session_id: str):
+    is_secure = settings.COOKIE_SECURE or (settings.ENVIRONMENT == "production")
+    samesite = "none" if is_secure else settings.COOKIE_SAMESITE
     response.set_cookie(
         key=settings.SESSION_COOKIE_NAME,
         value=session_id,
         max_age=settings.SESSION_TTL_SECONDS,
         httponly=settings.COOKIE_HTTPONLY,
-        secure=settings.COOKIE_SECURE,
-        samesite=settings.COOKIE_SAMESITE,
+        secure=is_secure,
+        samesite=samesite,
         path="/"
     )
 
 def _clear_session_cookie(response: Response):
+    is_secure = settings.COOKIE_SECURE or (settings.ENVIRONMENT == "production")
+    samesite = "none" if is_secure else settings.COOKIE_SAMESITE
     response.delete_cookie(
         key=settings.SESSION_COOKIE_NAME,
         path="/",
         httponly=settings.COOKIE_HTTPONLY,
-        secure=settings.COOKIE_SECURE,
-        samesite=settings.COOKIE_SAMESITE
+        secure=is_secure,
+        samesite=samesite
     )
 
 @router.post(
@@ -76,9 +80,10 @@ async def register(
             "email": user_doc["email"],
             "role": user_doc["role"],
             "isActive": user_doc["isActive"],
-            "createdAt": user_doc["createdAt"].isoformat()
+            "createdAt": user_doc["createdAt"].isoformat() if hasattr(user_doc["createdAt"], "isoformat") else str(user_doc["createdAt"])
         },
-        "csrfToken": csrf_token
+        "csrfToken": csrf_token,
+        "sessionId": session_id
     }
     return ApiResponse(data=profile)
 
@@ -120,9 +125,80 @@ async def login(
             "email": user["email"],
             "role": user["role"],
             "isActive": user["isActive"],
-            "createdAt": user["createdAt"].isoformat()
+            "createdAt": user["createdAt"].isoformat() if hasattr(user["createdAt"], "isoformat") else str(user["createdAt"])
         },
-        "csrfToken": csrf_token
+        "csrfToken": csrf_token,
+        "sessionId": session_id
+    }
+    return ApiResponse(data=profile)
+
+@router.post(
+    "/demo",
+    response_model=ApiResponse[Dict[str, Any]]
+)
+async def demo_login(
+    response: Response,
+    db: AsyncIOMotorDatabase = Depends(get_db)
+):
+    user_repo = UserRepository(db)
+    demo_email = "demo@krishiguard.ai"
+    user = await user_repo.get_by_email(demo_email)
+
+    if not user:
+        pwd_hash = hash_password("DemoFarmer2026!")
+        user = await user_repo.create_user(
+            name="Demo Farmer (Anil)",
+            email=demo_email,
+            password_hash=pwd_hash,
+            role="farmer"
+        )
+        user_id = str(user["_id"])
+        
+        # Seed 2 realistic demo farms for immediate exploring
+        from backend.app.repositories.farm_repo import FarmRepository
+        farm_repo = FarmRepository(db)
+        await farm_repo.create_farm({
+            "ownerUserId": user_id,
+            "name": "Sahyadri Vineyards",
+            "cropType": "Grapes",
+            "soilType": "Black Cotton Soil",
+            "irrigationMethod": "Drip Irrigation",
+            "latitude": 18.5204,
+            "longitude": 73.8567,
+            "acreage": 8.5,
+            "plantingDate": "2024-01-15",
+            "status": "active"
+        })
+        await farm_repo.create_farm({
+            "ownerUserId": user_id,
+            "name": "Krishna Valley Tomato Patch",
+            "cropType": "Tomatoes",
+            "soilType": "Loamy Red Soil",
+            "irrigationMethod": "Sprinkler",
+            "latitude": 17.6805,
+            "longitude": 74.0183,
+            "acreage": 4.2,
+            "plantingDate": "2024-03-01",
+            "status": "active"
+        })
+    else:
+        user_id = str(user["_id"])
+
+    session_id = await SessionService.create_session(user_id=user_id, role="farmer")
+    _set_session_cookie(response, session_id)
+    csrf_token = generate_csrf_token(session_id)
+
+    profile = {
+        "user": {
+            "id": user_id,
+            "name": user["name"],
+            "email": user["email"],
+            "role": user["role"],
+            "isActive": user.get("isActive", True),
+            "createdAt": user["createdAt"].isoformat() if hasattr(user["createdAt"], "isoformat") else str(user["createdAt"])
+        },
+        "csrfToken": csrf_token,
+        "sessionId": session_id
     }
     return ApiResponse(data=profile)
 
@@ -132,6 +208,13 @@ async def logout(
     response: Response
 ):
     session_id = request.cookies.get(settings.SESSION_COOKIE_NAME)
+    if not session_id:
+        auth_header = request.headers.get("Authorization")
+        if auth_header and auth_header.startswith("Bearer "):
+            session_id = auth_header.split(" ", 1)[1].strip()
+        elif request.headers.get("X-Session-ID"):
+            session_id = request.headers.get("X-Session-ID")
+
     if session_id:
         await SessionService.revoke_session(session_id)
     _clear_session_cookie(response)

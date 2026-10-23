@@ -17,7 +17,14 @@ async def get_current_user(
     """
     session_id = request.cookies.get(settings.SESSION_COOKIE_NAME)
     if not session_id:
-        raise AuthenticationError("Authentication required. No session cookie found.")
+        auth_header = request.headers.get("Authorization")
+        if auth_header and auth_header.startswith("Bearer "):
+            session_id = auth_header.split(" ", 1)[1].strip()
+        elif request.headers.get("X-Session-ID"):
+            session_id = request.headers.get("X-Session-ID")
+
+    if not session_id:
+        raise AuthenticationError("Authentication required. No session cookie or token found.")
 
     session_data = await SessionService.get_session(session_id)
     if not session_data:
